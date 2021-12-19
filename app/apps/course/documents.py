@@ -26,3 +26,11 @@ class WikiDocument(Document):
         model = Wiki
         fields = ["id", "type", "title", "body", "unit", "synonyms", "timestamp", ]
         related_models = [Course, ]
+
+    def get_instances_from_related(self, related_instance):
+        """If related_models is set, define how to retrieve the Car instance(s) from the related model.
+        The related_models option should be used with caution because it can lead in the index
+        to the updating of a lot of items.
+        """
+        if isinstance(related_instance, Course):
+            return related_instance.wiki_units.all()
