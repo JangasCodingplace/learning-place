@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,12 @@ DATABASES = {
     }
 }
 
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': f'https://{os.getenv("ES_USERNAME")}:{os.getenv("ES_PASSWORD")}@{os.getenv("ES_PATH")}'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

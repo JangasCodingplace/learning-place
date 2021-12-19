@@ -20,8 +20,7 @@ class Search:
 
 
 @method_decorator(login_required, name='dispatch')
-class CourseIndex(DetailView):
-    template_name = "course/index.html"
+class CourseBaseView(DetailView):
     queryset = course_models.Course.objects
     pk_url_kwarg = None
     slug_url_kwarg = "number"
@@ -29,5 +28,18 @@ class CourseIndex(DetailView):
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        kwargs["course_view"] = self.object
+        return kwargs
+
+
+class CourseIndex(CourseBaseView):
+    template_name = "course/index.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
         kwargs["exams"] = self.object.exams.order_by('-date')
         return kwargs
+
+
+class CourseSearch(CourseBaseView):
+    template_name = "course/search/index.html"

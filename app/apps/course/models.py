@@ -72,12 +72,21 @@ class Wiki(models.Model):
     timestamp = models.DateTimeField(
         auto_now_add=True
     )
+    synonyms = models.TextField(
+        blank=True
+    )
 
     class Meta:
         unique_together = ("type", "title", )
 
     def __str__(self):
         return self.title
+
+    def save(self):
+        if self.title.lower() not in self.synonyms:
+            synonyms = [self.title] + self.synonyms.split(",")
+            self.synonyms = ",".join([synonym.lower() for synonym in synonyms if synonym != ""])
+        return super().save()
 
 
 class Submission(models.Model):

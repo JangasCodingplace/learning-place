@@ -20,5 +20,10 @@ urlpatterns = [
         'course/<number>',
         views.CourseIndex.as_view(),
         name="course_index"
+    ),
+    path(
+        'course/<number>/search',
+        views.CourseSearch.as_view(),
+        name="course_search"
     )
 ]
