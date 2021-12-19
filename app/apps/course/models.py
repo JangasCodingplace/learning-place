@@ -21,12 +21,14 @@ class Course(models.Model):
         max_length=120,
         unique=True
     )
-    number = models.IntegerField(
-        unique=True
+    number = models.CharField(
+        unique=True,
+        max_length=10
     )
     transfer = models.ManyToManyField(
         to="Course",
-        related_name="course_references"
+        related_name="course_references",
+        blank=True
     )
     is_active = models.BooleanField(
         default=True
@@ -50,7 +52,8 @@ class Wiki(models.Model):
     body = models.TextField()
     transfer = models.ManyToManyField(
         to="Wiki",
-        related_name="wiki_references"
+        related_name="wiki_references",
+        blank=True
     )
     unit = models.SmallIntegerField(
         null=True,
@@ -58,7 +61,8 @@ class Wiki(models.Model):
     )
     calculated_references = models.ManyToManyField(
         to="Wiki",
-        related_name="calculated_wiki_references"
+        related_name="calculated_wiki_references",
+        blank=True
     )
     course = models.ForeignKey(
         to=Course,
@@ -85,7 +89,8 @@ class Submission(models.Model):
     solution = models.TextField()
     direct_wiki_references = models.ManyToManyField(
         to=Wiki,
-        related_name="submissions"
+        related_name="submissions",
+        blank=True
     )
     course = models.ForeignKey(
         to=Course,
@@ -94,7 +99,8 @@ class Submission(models.Model):
     )
     all_wiki_references = models.ManyToManyField(
         to=Wiki,
-        related_name="all_submissions"
+        related_name="all_submissions",
+        blank=True
     )
     unit = models.SmallIntegerField(
         blank=True,
