@@ -45,6 +45,7 @@ class CourseSearch(CourseBaseView):
         kwargs = super().get_context_data(**kwargs)
         q = self.request.GET.get("q")
         if q is not None:
+            title_match_ids = []
             title_match = list(
                 course_documents.WikiDocument.search().query("match", synonyms=q)
             )
