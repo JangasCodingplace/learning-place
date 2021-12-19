@@ -4,6 +4,55 @@
 
   <h1>{{ object.title }}</h1>
 
-  SUCHE
+  <hr>
 
+  {% if title_match %}
+  <div class="list-group">
+  {% for match in title_match %}
+    <button
+      type="button"
+      class="list-group-item list-group-item-action btn btn-link"
+      data-toggle="modal"
+      data-target="#searchResultModal"
+      data-entity-id="{{ match.id }}"
+    >
+      {{ match.title }}
+    </button>
+  {% endfor %}
+  </div>
+  {% else %}
+  <p>Keine Ergebnisse in der direkten Titelsuche</p>
+  {% endif %}
+
+  <hr>
+
+  {% if body_match %}
+    <div class="list-group">
+      {% for match in body_match %}
+      <button
+        type="button"
+        class="list-group-item list-group-item-action btn btn-link"
+        data-toggle="modal"
+        data-target="#searchResultModal"
+        data-entity-id="{{ match.id }}"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ match.title }}</h5>
+        </div>
+        <p class="mb-1">{{ match.body|truncatechars:140 }}</p>
+      </button>
+      {% endfor %}
+    </div>
+  {% else %}
+  <p>Keine Ergebnisse in der indirekten Regex-Suche</p>
+  {% endif %}
+
+{% include 'course/search/searchResultModal.html' %}
+
+{% endblock %}
+
+{% block javascript %}
+  <script type="application/javascript">
+    {% include "course/search/searchResultModal.js" %}
+  </script>
 {% endblock %}

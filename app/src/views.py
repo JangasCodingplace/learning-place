@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from apps.course import models as course_models
+from apps.course import documents as course_documents
 
 
 @method_decorator(login_required, name='dispatch')
@@ -13,10 +14,6 @@ class Dashboard(TemplateView):
         kwargs = super().get_context_data(**kwargs)
         kwargs["active_courses"] = course_models.Course.objects.filter(is_active=True).all()
         return kwargs
-
-
-class Search:
-    pass
 
 
 @method_decorator(login_required, name='dispatch')
@@ -43,3 +40,25 @@ class CourseIndex(CourseBaseView):
 
 class CourseSearch(CourseBaseView):
     template_name = "course/search/index.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        q = self.request.GET.get("q")
+        if q is not None:
+            title_match = list(
+                course_documents.WikiDocument.search().query("match", synonyms=q)
+            )
+            if len(title_match) > 0:
+                title_match_ids = [match.id for match in title_match]
+                kwargs["title_match"] = title_match
+
+            body_match = list(
+                course_documents.WikiDocument.search().query("match", body=q)
+            )
+            if len(body_match) > 0:
+                filtered_body_matches = [
+                    match for match in body_match if match.id not in title_match_ids
+                ]
+                if filtered_body_matches:
+                    kwargs["body_match"] = filtered_body_matches
+        return kwargs

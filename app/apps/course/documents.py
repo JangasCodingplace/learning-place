@@ -24,5 +24,5 @@ class WikiDocument(Document):
 
     class Django:
         model = Wiki
-        fields = ["type", "title", "body", "unit", "synonyms", "timestamp", ]
+        fields = ["id", "type", "title", "body", "unit", "synonyms", "timestamp", ]
         related_models = [Course, ]
