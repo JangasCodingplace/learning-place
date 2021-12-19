@@ -4,7 +4,7 @@
 
   <div class="row row-cols-1 row-cols-md-3">
     {% for course in active_courses %}
-    <div class="col mb-4">
+    <div class="col mb-4" name="course-card" data-course-number="{{ course.number }}" style="cursor: pointer">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ course.title }}</h5>
@@ -14,4 +14,12 @@
     {% endfor %}
   </div>
 
+{% endblock %}
+
+{% block javascript %}
+  <script type="application/javascript">
+    $("[name=course-card]").click(function (){
+      window.location = "{% url 'course_index' 'REPLACE_COURSE_NUMBER' %}".replace("REPLACE_COURSE_NUMBER", $(this).attr("data-course-number"))
+    })
+  </script>
 {% endblock %}
