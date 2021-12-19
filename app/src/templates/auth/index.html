@@ -1,0 +1,23 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Authentication</h5>
+    <form method="post" action="{% url 'auth' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" class="form-control" id="username" aria-describedby="emailHelp">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" id="password">
+      </div>
+      <button type="submit" class="btn btn-outline-primary w-100">Login</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'base/head.html' %}
+
+  {% block style %}
+  {% endblock %}
+
+</head>
+
+
+<body>
+
+<header>
+  {% include 'base/nav.html' %}
+</header>
+
+<div id="content-wrapper" class="d-flex flex-column">
+  <div id="content">
+    <div class="container-fluid">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+<footer class="sticky-footer bg-white">
+  {% include 'base/footer.html' %}
+</footer>
+
+
+{% include 'base/load_js.html' %}
+
+{% block javascript %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+[submodule "app/static/sb-admin-2"]
+	path = app/src/static/sb-admin-2
+	url = https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git
