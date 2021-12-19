@@ -1,0 +1,13 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+
+  <h1>{{ object.title }}</h1>
+
+  {% if exams|length > 0 %}
+  Pruefung: {{ exams.first.date|date:'d.m.Y H:i' }}
+  {% else %}
+  Keine Pruefung vorgemerkt.
+  {% endif %}
+
+{% endblock %}

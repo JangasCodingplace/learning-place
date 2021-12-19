@@ -15,5 +15,10 @@ urlpatterns = [
         '',
         views.Dashboard.as_view(),
         name="dashboard"
+    ),
+    path(
+        'course/<number>',
+        views.CourseIndex.as_view(),
+        name="course_index"
     )
 ]
